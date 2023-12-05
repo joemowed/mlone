@@ -18,18 +18,6 @@
   "output": "CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.o"
 },
 {
-  "directory": "/home/jmaloney/Documents/mlone/build",
-  "command": "/usr/bin/c++  -I/home/jmaloney/Documents/mlone/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest -std=gnu++20 -o CMakeFiles/matrixTest.dir/src/main.cpp.o -c /home/jmaloney/Documents/mlone/src/main.cpp",
-  "file": "/home/jmaloney/Documents/mlone/src/main.cpp",
-  "output": "CMakeFiles/matrixTest.dir/src/main.cpp.o"
-},
-{
-  "directory": "/home/jmaloney/Documents/mlone/build",
-  "command": "/usr/bin/c++  -I/home/jmaloney/Documents/mlone/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest -std=gnu++20 -o CMakeFiles/matrixTest.dir/src/matrix.cpp.o -c /home/jmaloney/Documents/mlone/src/matrix.cpp",
-  "file": "/home/jmaloney/Documents/mlone/src/matrix.cpp",
-  "output": "CMakeFiles/matrixTest.dir/src/matrix.cpp.o"
-},
-{
   "directory": "/home/jmaloney/Documents/mlone/build/_deps/googletest-build/googlemock",
   "command": "/usr/bin/c++  -I/home/jmaloney/Documents/mlone/build/_deps/googletest-src/googlemock/include -I/home/jmaloney/Documents/mlone/build/_deps/googletest-src/googlemock -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest -std=c++20 -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googlemock/src/gmock-all.cc",
   "file": "/home/jmaloney/Documents/mlone/build/_deps/googletest-src/googlemock/src/gmock-all.cc",

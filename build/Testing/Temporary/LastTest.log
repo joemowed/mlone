@@ -1,3 +1,111 @@
-Start testing: Dec 04 23:49 EST
+Start testing: Dec 05 15:58 EST
 ----------------------------------------------------------
-End testing: Dec 04 23:49 EST
+1/4 Testing: testTest.testTest
+1/4 Test: testTest.testTest
+Command: "/home/jmaloney/Documents/mlone/build/matrixTest" "--gtest_filter=testTest.testTest" "--gtest_also_run_disabled_tests"
+Directory: /home/jmaloney/Documents/mlone/build
+"testTest.testTest" start time: Dec 05 15:58 EST
+Output:
+----------------------------------------------------------
+Running main() from /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = testTest.testTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from testTest
+[ RUN      ] testTest.testTest
+[       OK ] testTest.testTest (0 ms)
+[----------] 1 test from testTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"testTest.testTest" end time: Dec 05 15:58 EST
+"testTest.testTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/4 Testing: matrixTest.matrixSetAndGet
+2/4 Test: matrixTest.matrixSetAndGet
+Command: "/home/jmaloney/Documents/mlone/build/matrixTest" "--gtest_filter=matrixTest.matrixSetAndGet" "--gtest_also_run_disabled_tests"
+Directory: /home/jmaloney/Documents/mlone/build
+"matrixTest.matrixSetAndGet" start time: Dec 05 15:58 EST
+Output:
+----------------------------------------------------------
+Running main() from /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = matrixTest.matrixSetAndGet
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from matrixTest
+[ RUN      ] matrixTest.matrixSetAndGet
+[       OK ] matrixTest.matrixSetAndGet (50 ms)
+[----------] 1 test from matrixTest (50 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (50 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"matrixTest.matrixSetAndGet" end time: Dec 05 15:58 EST
+"matrixTest.matrixSetAndGet" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/4 Testing: matrixTest.matrixInitZero
+3/4 Test: matrixTest.matrixInitZero
+Command: "/home/jmaloney/Documents/mlone/build/matrixTest" "--gtest_filter=matrixTest.matrixInitZero" "--gtest_also_run_disabled_tests"
+Directory: /home/jmaloney/Documents/mlone/build
+"matrixTest.matrixInitZero" start time: Dec 05 15:58 EST
+Output:
+----------------------------------------------------------
+Running main() from /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = matrixTest.matrixInitZero
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from matrixTest
+[ RUN      ] matrixTest.matrixInitZero
+[       OK ] matrixTest.matrixInitZero (38 ms)
+[----------] 1 test from matrixTest (38 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (38 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"matrixTest.matrixInitZero" end time: Dec 05 15:58 EST
+"matrixTest.matrixInitZero" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/4 Testing: matrixTest.matrixMultTest
+4/4 Test: matrixTest.matrixMultTest
+Command: "/home/jmaloney/Documents/mlone/build/matrixTest" "--gtest_filter=matrixTest.matrixMultTest" "--gtest_also_run_disabled_tests"
+Directory: /home/jmaloney/Documents/mlone/build
+"matrixTest.matrixMultTest" start time: Dec 05 15:58 EST
+Output:
+----------------------------------------------------------
+Running main() from /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/src/gtest_main.cc
+Note: Google Test filter = matrixTest.matrixMultTest
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from matrixTest
+[ RUN      ] matrixTest.matrixMultTest
+[       OK ] matrixTest.matrixMultTest (3466 ms)
+[----------] 1 test from matrixTest (3466 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (3466 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   3.47 sec
+----------------------------------------------------------
+Test Passed.
+"matrixTest.matrixMultTest" end time: Dec 05 15:58 EST
+"matrixTest.matrixMultTest" time elapsed: 00:00:03
+----------------------------------------------------------
+
+End testing: Dec 05 15:58 EST

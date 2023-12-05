@@ -136,7 +136,7 @@ _deps/googletest-build/googletest/clean: _deps/googletest-build/googletest/CMake
 CMakeFiles/mlone.exe.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mlone.exe.dir/build.make CMakeFiles/mlone.exe.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mlone.exe.dir/build.make CMakeFiles/mlone.exe.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jmaloney/Documents/mlone/build/CMakeFiles --progress-num=13,14,15 "Built target mlone.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jmaloney/Documents/mlone/build/CMakeFiles --progress-num=11,12,13 "Built target mlone.exe"
 .PHONY : CMakeFiles/mlone.exe.dir/all
 
 # Build rule for subdir invocation for target.
@@ -163,12 +163,12 @@ CMakeFiles/matrixTest.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtes
 CMakeFiles/matrixTest.dir/all: _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/matrixTest.dir/build.make CMakeFiles/matrixTest.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/matrixTest.dir/build.make CMakeFiles/matrixTest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jmaloney/Documents/mlone/build/CMakeFiles --progress-num=9,10,11,12 "Built target matrixTest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/jmaloney/Documents/mlone/build/CMakeFiles --progress-num=9,10 "Built target matrixTest"
 .PHONY : CMakeFiles/matrixTest.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/matrixTest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jmaloney/Documents/mlone/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jmaloney/Documents/mlone/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/matrixTest.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jmaloney/Documents/mlone/build/CMakeFiles 0
 .PHONY : CMakeFiles/matrixTest.dir/rule

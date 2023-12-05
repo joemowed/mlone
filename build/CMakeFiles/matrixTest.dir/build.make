@@ -83,51 +83,19 @@ CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jmaloney/Documents/mlone/src/testing/matrixTest.cc -o CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.s
 
-CMakeFiles/matrixTest.dir/src/main.cpp.o: CMakeFiles/matrixTest.dir/flags.make
-CMakeFiles/matrixTest.dir/src/main.cpp.o: /home/jmaloney/Documents/mlone/src/main.cpp
-CMakeFiles/matrixTest.dir/src/main.cpp.o: CMakeFiles/matrixTest.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/jmaloney/Documents/mlone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/matrixTest.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/matrixTest.dir/src/main.cpp.o -MF CMakeFiles/matrixTest.dir/src/main.cpp.o.d -o CMakeFiles/matrixTest.dir/src/main.cpp.o -c /home/jmaloney/Documents/mlone/src/main.cpp
-
-CMakeFiles/matrixTest.dir/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/matrixTest.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jmaloney/Documents/mlone/src/main.cpp > CMakeFiles/matrixTest.dir/src/main.cpp.i
-
-CMakeFiles/matrixTest.dir/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/matrixTest.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jmaloney/Documents/mlone/src/main.cpp -o CMakeFiles/matrixTest.dir/src/main.cpp.s
-
-CMakeFiles/matrixTest.dir/src/matrix.cpp.o: CMakeFiles/matrixTest.dir/flags.make
-CMakeFiles/matrixTest.dir/src/matrix.cpp.o: /home/jmaloney/Documents/mlone/src/matrix.cpp
-CMakeFiles/matrixTest.dir/src/matrix.cpp.o: CMakeFiles/matrixTest.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/jmaloney/Documents/mlone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/matrixTest.dir/src/matrix.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/matrixTest.dir/src/matrix.cpp.o -MF CMakeFiles/matrixTest.dir/src/matrix.cpp.o.d -o CMakeFiles/matrixTest.dir/src/matrix.cpp.o -c /home/jmaloney/Documents/mlone/src/matrix.cpp
-
-CMakeFiles/matrixTest.dir/src/matrix.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/matrixTest.dir/src/matrix.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jmaloney/Documents/mlone/src/matrix.cpp > CMakeFiles/matrixTest.dir/src/matrix.cpp.i
-
-CMakeFiles/matrixTest.dir/src/matrix.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/matrixTest.dir/src/matrix.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jmaloney/Documents/mlone/src/matrix.cpp -o CMakeFiles/matrixTest.dir/src/matrix.cpp.s
-
 # Object files for target matrixTest
 matrixTest_OBJECTS = \
-"CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.o" \
-"CMakeFiles/matrixTest.dir/src/main.cpp.o" \
-"CMakeFiles/matrixTest.dir/src/matrix.cpp.o"
+"CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.o"
 
 # External object files for target matrixTest
 matrixTest_EXTERNAL_OBJECTS =
 
 matrixTest: CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.o
-matrixTest: CMakeFiles/matrixTest.dir/src/main.cpp.o
-matrixTest: CMakeFiles/matrixTest.dir/src/matrix.cpp.o
 matrixTest: CMakeFiles/matrixTest.dir/build.make
 matrixTest: lib/libgtest_main.a
 matrixTest: lib/libgtest.a
 matrixTest: CMakeFiles/matrixTest.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/jmaloney/Documents/mlone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable matrixTest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/jmaloney/Documents/mlone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable matrixTest"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/matrixTest.dir/link.txt --verbose=$(VERBOSE)
 	/usr/bin/cmake -D TEST_TARGET=matrixTest -D TEST_EXECUTABLE=/home/jmaloney/Documents/mlone/build/matrixTest -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/home/jmaloney/Documents/mlone/build -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=matrixTest_TESTS -D CTEST_FILE=/home/jmaloney/Documents/mlone/build/matrixTest[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /usr/share/cmake-3.27/Modules/GoogleTestAddTests.cmake
 

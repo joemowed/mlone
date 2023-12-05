@@ -8,8 +8,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/jmaloney/Documents/mlone/src/main.cpp" "CMakeFiles/matrixTest.dir/src/main.cpp.o" "gcc" "CMakeFiles/matrixTest.dir/src/main.cpp.o.d"
-  "/home/jmaloney/Documents/mlone/src/matrix.cpp" "CMakeFiles/matrixTest.dir/src/matrix.cpp.o" "gcc" "CMakeFiles/matrixTest.dir/src/matrix.cpp.o.d"
   "/home/jmaloney/Documents/mlone/src/testing/matrixTest.cc" "CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.o" "gcc" "CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.o.d"
   )
 

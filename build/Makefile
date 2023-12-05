@@ -255,7 +255,6 @@ src/main.o: src/main.cpp.o
 # target to build an object file
 src/main.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mlone.exe.dir/build.make CMakeFiles/mlone.exe.dir/src/main.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/matrixTest.dir/build.make CMakeFiles/matrixTest.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -264,7 +263,6 @@ src/main.i: src/main.cpp.i
 # target to preprocess a source file
 src/main.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mlone.exe.dir/build.make CMakeFiles/mlone.exe.dir/src/main.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/matrixTest.dir/build.make CMakeFiles/matrixTest.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -273,7 +271,6 @@ src/main.s: src/main.cpp.s
 # target to generate assembly for a file
 src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mlone.exe.dir/build.make CMakeFiles/mlone.exe.dir/src/main.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/matrixTest.dir/build.make CMakeFiles/matrixTest.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 src/matrix.o: src/matrix.cpp.o
@@ -282,7 +279,6 @@ src/matrix.o: src/matrix.cpp.o
 # target to build an object file
 src/matrix.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mlone.exe.dir/build.make CMakeFiles/mlone.exe.dir/src/matrix.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/matrixTest.dir/build.make CMakeFiles/matrixTest.dir/src/matrix.cpp.o
 .PHONY : src/matrix.cpp.o
 
 src/matrix.i: src/matrix.cpp.i
@@ -291,7 +287,6 @@ src/matrix.i: src/matrix.cpp.i
 # target to preprocess a source file
 src/matrix.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mlone.exe.dir/build.make CMakeFiles/mlone.exe.dir/src/matrix.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/matrixTest.dir/build.make CMakeFiles/matrixTest.dir/src/matrix.cpp.i
 .PHONY : src/matrix.cpp.i
 
 src/matrix.s: src/matrix.cpp.s
@@ -300,7 +295,6 @@ src/matrix.s: src/matrix.cpp.s
 # target to generate assembly for a file
 src/matrix.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mlone.exe.dir/build.make CMakeFiles/mlone.exe.dir/src/matrix.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/matrixTest.dir/build.make CMakeFiles/matrixTest.dir/src/matrix.cpp.s
 .PHONY : src/matrix.cpp.s
 
 src/testing/matrixTest.o: src/testing/matrixTest.cc.o
