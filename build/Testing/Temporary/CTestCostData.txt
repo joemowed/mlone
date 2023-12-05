@@ -1,4 +1,5 @@
 hello_test_NOT_BUILT 0 0
 HelloTest.BasicAssertions 1 0
+testTest.testTest 1 0.00200832
+matrixTest.matrixDataType 1 0.00203777
 ---
-HelloTest.BasicAssertions

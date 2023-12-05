@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/mlone.exe.dir/src/main.cpp.o"
   "CMakeFiles/mlone.exe.dir/src/main.cpp.o.d"
+  "CMakeFiles/mlone.exe.dir/src/matrix.cpp.o"
+  "CMakeFiles/mlone.exe.dir/src/matrix.cpp.o.d"
   "mlone.exe"
   "mlone.exe.pdb"
 )

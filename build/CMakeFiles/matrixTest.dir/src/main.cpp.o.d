@@ -1,4 +1,4 @@
-CMakeFiles/mlone.exe.dir/src/main.cpp.o: \
+CMakeFiles/matrixTest.dir/src/main.cpp.o: \
  /home/jmaloney/Documents/mlone/src/main.cpp /usr/include/stdc-predef.h \
  /home/jmaloney/Documents/mlone/src/include/matrix.hpp \
  /usr/include/c++/13/array /usr/include/c++/13/compare \

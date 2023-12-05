@@ -7,9 +7,27 @@
 },
 {
   "directory": "/home/jmaloney/Documents/mlone/build",
+  "command": "/usr/bin/c++  -I/home/jmaloney/Documents/mlone/include -I/home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/include -std=gnu++20 -o CMakeFiles/mlone.exe.dir/src/matrix.cpp.o -c /home/jmaloney/Documents/mlone/src/matrix.cpp",
+  "file": "/home/jmaloney/Documents/mlone/src/matrix.cpp",
+  "output": "CMakeFiles/mlone.exe.dir/src/matrix.cpp.o"
+},
+{
+  "directory": "/home/jmaloney/Documents/mlone/build",
   "command": "/usr/bin/c++  -I/home/jmaloney/Documents/mlone/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest -std=gnu++20 -o CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.o -c /home/jmaloney/Documents/mlone/src/testing/matrixTest.cc",
   "file": "/home/jmaloney/Documents/mlone/src/testing/matrixTest.cc",
   "output": "CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.o"
+},
+{
+  "directory": "/home/jmaloney/Documents/mlone/build",
+  "command": "/usr/bin/c++  -I/home/jmaloney/Documents/mlone/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest -std=gnu++20 -o CMakeFiles/matrixTest.dir/src/main.cpp.o -c /home/jmaloney/Documents/mlone/src/main.cpp",
+  "file": "/home/jmaloney/Documents/mlone/src/main.cpp",
+  "output": "CMakeFiles/matrixTest.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/jmaloney/Documents/mlone/build",
+  "command": "/usr/bin/c++  -I/home/jmaloney/Documents/mlone/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest/include -isystem /home/jmaloney/Documents/mlone/build/_deps/googletest-src/googletest -std=gnu++20 -o CMakeFiles/matrixTest.dir/src/matrix.cpp.o -c /home/jmaloney/Documents/mlone/src/matrix.cpp",
+  "file": "/home/jmaloney/Documents/mlone/src/matrix.cpp",
+  "output": "CMakeFiles/matrixTest.dir/src/matrix.cpp.o"
 },
 {
   "directory": "/home/jmaloney/Documents/mlone/build/_deps/googletest-build/googlemock",
