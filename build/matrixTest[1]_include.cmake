@@ -1,5 +1,0 @@
-if(EXISTS "/home/jmaloney/Documents/mlone/build/matrixTest[1]_tests.cmake")
-  include("/home/jmaloney/Documents/mlone/build/matrixTest[1]_tests.cmake")
-else()
-  add_test(matrixTest_NOT_BUILT matrixTest_NOT_BUILT)
-endif()

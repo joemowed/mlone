@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/matrixTest.dir/src/testing/matrixTest.cc.o -o matrixTest  lib/libgtest_main.a lib/libgtest.a 

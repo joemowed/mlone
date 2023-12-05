@@ -1,8 +1,0 @@
-hello_test_NOT_BUILT 0 0
-HelloTest.BasicAssertions 1 0
-testTest.testTest 11255 2.11283e-07
-matrixTest.matrixDataType 6 0.000637935
-matrixTest.matrixSetAndGet 11227 4.6959e-06
-matrixTest.matrixInitZero 11223 3.67518e-06
-matrixTest.matrixMultTest 3 1.15662
----
