@@ -4,7 +4,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # GoogleTest requires at least C++14
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_BUILD_TYPE Debug)
+set(ENABLE_FAST_MATH ON)
+set(CMAKE_CXX_FLAGS "-O3")
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -18,15 +19,14 @@ file(GLOB SOURCES "src/*.cpp")
 include_directories(include ${CMAKE_SOURCE_DIR}/build/_deps/googletest-src/googletest/include)
 add_executable(mlone.exe ${SOURCES})
 enable_testing()
-
+file(GLOB TESTS "src/testing/*.cc")
 add_executable(
-  matrixTest
-  src/testing/matrixTest.cc
-)
+  tests.exe
+  ${TESTS})
 target_link_libraries(
-  matrixTest
+  tests.exe
   GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(matrixTest)
+gtest_discover_tests(tests.exe)

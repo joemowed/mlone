@@ -2,6 +2,7 @@
 #define MATRIX_TEST
 #include "../include/matrix.hpp"
 #include <algorithm>
+constexpr const int SMALL_MAT_TEST_COUNT = 1000;
 #include <array>
 #include <cstddef>
 #include <gtest/gtest.h>
@@ -106,9 +107,9 @@ TEST(matrixTest, copyAndTranpose) {
   auto copy1 = std::make_unique<matrix<5, 10>>();
   auto copy3 = std::make_unique<matrix<10, 5>>(*rowMatrix);
   ASSERT_EQ(copy3->matrixData, rowMatrix->matrixData);
-  MOP::transpose<10, 5>(rowMatrix, copy1);
+  MOP::transpose<10, 5>(rowMatrix.get(), copy1);
   ASSERT_NE(copy1->matrixData, rowMatrix->matrixData);
-  MOP::transpose<5, 10>(copy1, copy3);
+  MOP::transpose<5, 10>(copy1.get(), copy3);
 
   ASSERT_EQ(copy3->matrixData, rowMatrix->matrixData);
 }
@@ -147,13 +148,13 @@ TEST(matrixTest, matrixMultTest) {
   auto C1 = std::make_unique<matrix<1, 3>>();
   auto C2 = std::make_unique<matrix<2, 3>>();
   auto B2 = std::make_unique<matrix<2, 3>>();
-  auto A2 = std::make_unique<matrix<500, 500>>();
-  auto B3 = std::make_unique<matrix<500, 500>>();
-  auto C3 = std::make_unique<matrix<500, 500>>();
-  std::array<std::array<float, 500>, 500> bigTest;
-  matrixTestArrayFill<500, 500>(bigTest);
-  matrixTestSetSingle<500, 500>(bigTest, A2.get());
-  matrixTestSetSingle<500, 500>(bigTest, B3.get());
+  auto A2 = std::make_unique<matrix<2000, 2000>>();
+  auto B3 = std::make_unique<matrix<2000, 2000>>();
+  auto C3 = std::make_unique<matrix<2000, 2000>>();
+  std::array<std::array<float, 2000>, 2000> bigTest;
+  matrixTestArrayFill<2000, 2000>(bigTest);
+  matrixTestSetSingle<2000, 2000>(bigTest, A2.get());
+  matrixTestSetSingle<2000, 2000>(bigTest, B3.get());
   A1->setValue(0, 0, 1);
   A1->setValue(0, 1, 2);
   A1->setValue(0, 2, 3);
@@ -174,11 +175,35 @@ TEST(matrixTest, matrixMultTest) {
   B2->setValue(1, 1, 5);
   B2->setValue(2, 1, 6);
   std::cout << "\ntesting a1,b1\n";
-  MOP::multiply<1, 3, 3>(A1, B1, C1);
+  MOP::multiply<1, 3, 3>(A1.get(), B1.get(), C1.get());
   std::cout << "\ntesting a1,b2\n";
-  MOP::multiply<2, 3, 3>(A1, B2, C2);
+  for (int i = 0; i < SMALL_MAT_TEST_COUNT; i++) {
+
+    MOP::multiply<2, 3, 3>(A1.get(), B2.get(), C2.get());
+  }
+  std::vector<std::thread> threads;
+  std::vector<std::unique_ptr<matrix<2000, 2000>>> bMats;
+  std::vector<std::unique_ptr<matrix<2000, 2000>>> aMats;
+  std::vector<std::unique_ptr<matrix<2000, 2000>>> cMats;
+  constexpr const std::size_t INSTANCES = 5;
+  for (std::size_t constructItor = 0; constructItor <= INSTANCES;
+       constructItor++) {
+    bMats.push_back(std::make_unique<matrix<2000, 2000>>(*B3));
+    aMats.push_back(std::make_unique<matrix<2000, 2000>>(*A2));
+    cMats.push_back(std::make_unique<matrix<2000, 2000>>(*C3));
+  }
+  for (std::size_t genItor = 0; genItor < INSTANCES; genItor++) {
+    threads.push_back(std::thread(
+
+        MOP::multiply<2000, 2000, 2000>, aMats.at(genItor).get(),
+        bMats.at(genItor).get(), cMats.at(genItor).get()));
+  }
+
+  for (std::thread &each : threads) {
+    each.join();
+  }
   std::cout << "\ntesting a3,b3\n";
-  MOP::multiply<500, 500, 500>(A2, B3, C3);
+  MOP::multiply<2000, 2000, 2000>(A2.get(), B3.get(), C3.get());
   ASSERT_EQ(C1->getValue(0, 0), 14);
   ASSERT_EQ(C1->getValue(1, 0), 32);
   ASSERT_EQ(C1->getValue(2, 0), 50);
@@ -288,8 +313,8 @@ TEST(matrixTest, sliceMat) {
   auto slice1 = std::make_unique<matrix<2, 3>>();
   auto slice2 = std::make_unique<matrix<2, 3>>();
   MOP::concatForMult<2, 6, 3, 3>(first, second, result);
-  MOP::sliceHelper<2, 6, 3>(result, slice1, 0);
-  MOP::sliceHelper<2, 6, 3>(result, slice2, 1);
+  MOP::sliceHelper<2, 6, 3>(result.get(), slice1, 0);
+  MOP::sliceHelper<2, 6, 3>(result.get(), slice2, 1);
   ASSERT_EQ(first->matrixData, slice1->matrixData);
   ASSERT_EQ(second->matrixData, slice2->matrixData);
 }
