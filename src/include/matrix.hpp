@@ -1,3 +1,6 @@
+
+#ifndef MATRIX
+#define MATRIX
 #include <algorithm>
 #include <cassert>
 #include <chrono>
@@ -19,6 +22,7 @@ private:
 public:
   std::vector<float> matrixData;
   matrix() { matrixData.resize(rowSize * colSize, 0); };
+  matrix(std::vector<float> &initVec) { matrixData = initVec; }
   matrix(const matrix<rowSize, colSize> &t) { matrixData = t.matrixData; }
   void setValue(const std::size_t &rowIndex, const std::size_t &colIndex,
                 const float &value) {
@@ -177,3 +181,5 @@ void multiply(matrix<sharedSize, aColSize> *A, matrix<bRowSize, sharedSize> *B,
   }
 }
 } // namespace MOP
+
+#endif // !MATRIX

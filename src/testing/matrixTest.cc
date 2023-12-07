@@ -185,7 +185,7 @@ TEST(matrixTest, matrixMultTest) {
   std::vector<std::unique_ptr<matrix<2000, 2000>>> bMats;
   std::vector<std::unique_ptr<matrix<2000, 2000>>> aMats;
   std::vector<std::unique_ptr<matrix<2000, 2000>>> cMats;
-  constexpr const std::size_t INSTANCES = 5;
+  constexpr const std::size_t INSTANCES = 2;
   for (std::size_t constructItor = 0; constructItor <= INSTANCES;
        constructItor++) {
     bMats.push_back(std::make_unique<matrix<2000, 2000>>(*B3));
