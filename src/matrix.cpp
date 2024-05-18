@@ -1,87 +1,41 @@
-#include <algorithm>
-#include <bits/fs_fwd.h>
 #include <cassert>
-#include <cmath>
-#include <cstdint>
-#include <iostream>
-#include <matrix.hpp>
-#include <vector>
-matrix::matrix(const matrixDimensions dims, const std::vector<float> vecData) : dimensions(dims) {
+#include <cstddef>
+#include <matrix.hpp> // Use (void) to silence unused warnings.
+#define assertm(exp, msg) assert(((void)msg, exp))
+matrix::matrix(size_t i, size_t j) : i{i}, j{j} { data = std::vector<float>(i * j); }
+matrix::matrix(size_t i, size_t j, std::normal_distribution<float> dist) : i{i}, j{j} {
+    data = std::vector<float>(i * j);
+    std::random_device rd{};
+    std::mt19937 gen{rd()};
+    for (float &each : data) {
 
-    assert(vecData.size() % dims.cols == 0 && vecData.size() % dims.rows == 0 && "Matrix init via vector requires vector size to be integer multiple  of matrix dimensions");
-    data = vecData;
-}
-matrix::matrix(const matrixDimensions dims) : dimensions(dims) { data.resize(dimensions.rows * dimensions.cols); }
-float matrix::getMember(int x, int y) {
-    if (false) {
-        std::cout << "x,y " << x << "," << y << " dims: " << dimensions.rows << "," << dimensions.cols << std::endl;
+        each = dist(gen);
     }
-    assert(((y * dimensions.cols) + x) < data.size() && "Matrix getMember out of index on get");
-    return data.at((dimensions.cols * y) + x);
 }
-
-void matrix::setMember(int x, int y, float value) {
-    assert(((y * dimensions.cols) + x) < data.size() && "Matrix set member out of index on set");
-    data.at((dimensions.cols * y) + x) = value;
+matrix::matrix(size_t i, size_t j, std::vector<float> &initData) : i{i}, j{j} {
+    assertm((i * j) > initData.size(), "Matrix initialization: dimension mismatch i*j is larger than input vector");
+    assertm((i * j) < initData.size(), "Matrix initialization: dimension mismatch i*j is smaller than input vector");
 }
-void matrix::coutMat() {
-    int i = 1;
-    for (const float &each : data) {
-        std::cout << each << " ";
-        if (i % dimensions.cols == 0) {
-            std::cout << std::endl;
-        }
+float matrix::getMember(size_t x, size_t y) {}
+void matrix::setMember(size_t x, size_t y) {}
+matrix matrix::sig(const matrix &mat) {}
+matrix matrix::sig_d(const matrix &mat) {}
+matrix matrix::operator+(const matrix &b) const {
+    assertm(this->i > b.i, "Addition: A is larger than B in A+B, i dimension ");
+    assertm(this->i < b.i, "Addition: B is larger than A in A+B, i dimension ");
+    assertm(this->j > b.j, "Addition: A is larger than B in A+B, j dimension ");
+    assertm(this->j < b.j, "Addition: B is larger than A in A+B, j dimension ");
+    matrix mat(this->i, this->j);
+    size_t i{0};
+    for (float &each : mat.data) {
+        each = this->data.at(i) + b.data.at(i);
         i++;
     }
+    return mat;
 }
-
-matrixDimensions matrix::getDimensions() { return dimensions; }
-void matrix::transpose() {
-    std::vector<float> newData;
-    newData.resize(dimensions.cols * dimensions.rows);
-    for (int y = 0; y < dimensions.rows; y++) {
-        for (int x = 0; x < dimensions.cols; x++) {
-            newData.at((x * dimensions.rows) + y) = getMember(x, y);
-        }
-    }
-    const uint32_t rows = dimensions.rows;
-    const uint32_t cols = dimensions.cols;
-
-    dimensions.rows = cols;
-    dimensions.cols = rows;
-    data = newData;
+matrix matrix::operator*(const matrix &b) const {}
+size_t matrix::calculateDataIndex(size_t x, size_t y) {
+    assertm(x >= this->i, "Matrix index out of range: x");
+    assertm(y >= this->j, "Matrix index out of range: y");
+    return (this->j * x) + y;
 }
-void matrix::relu() {
-    for (auto &each : data) {
-        each = std::max<float>(0, each);
-    }
-}
-matrix matrix::operator*(matrix &rightMat) {
-    matrixDimensions dims = {.rows = dimensions.rows, .cols = rightMat.dimensions.cols};
-    assert((dimensions.cols == rightMat.dimensions.rows) && "matrix multiply dimension mismatch");
-    matrix ret = matrix(dims);
-    for (int y = 0; y < ret.getDimensions().rows; y++) {
-        for (int x = 0; x < ret.getDimensions().cols; x++) {
-            float res = 0;
-            for (int additionIter = 0; additionIter < dimensions.cols; additionIter++) {
-                res += (getMember(additionIter, y) * rightMat.getMember(x, additionIter));
-            }
-            ret.setMember(x, y, res);
-        }
-    }
-    return ret;
-}
-void matrix::sigmoid() {
-    for (float &each : data) {
-        each = (1 / (1 + expf(-1.0 * each)));
-    }
-}
-
-void matrix::sigmoid_dx() {
-    sigmoid();
-    for (float &each : data) {
-        each = each * (1 - each);
-    }
-}
-
-matrix::~matrix() {}
