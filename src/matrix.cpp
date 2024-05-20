@@ -22,8 +22,24 @@ matrix::matrix(size_t i, size_t j, const std::vector<float> &initData) : _i{i}, 
     assertm((this->_i * this->_j) == initData.size(), "Matrix initialization: dimension mismatch i*j is not equal to size of input vector");
     this->data = initData;
 }
+matrix matrix::multiplyByConstant(const float b) const {
+    matrix ret = *this;
+    for (float &each : ret.data) {
+        each *= b;
+    }
+    return ret;
+}
 float &matrix::at(size_t x, size_t y) { return data.at(this->calculateDataIndex(x, y)); }
-
+matrix matrix::hadMult(const matrix &b) const {
+    matrix ret{this->i(), this->j()};
+    assertm(this->_i == b._i, "Matrix Hadamard: dimension mismatch in A+B, i dimension ");
+    assertm(this->_j == b._j, "Matrix Hadamard: dimension mismatch in A+B, j dimension ");
+    size_t i = 0;
+    for (float &each : ret.data) {
+        each = this->data.at(i) * b.data.at(i);
+    }
+    return ret;
+}
 matrix matrix::sig() const {
     matrix ret{this->_i, this->_j, this->data};
     for (float &each : ret.data) {
@@ -88,7 +104,6 @@ matrix &matrix::operator=(matrix &&b) {
 matrix matrix::operator*(const matrix &b) const {
     assertm(this->_j == b._i, "Matrix Multiplication: A.j != to B.i, in A*B");
     matrix ret(this->_i, b._j);
-    std::cout << "\n";
     for (size_t rowA = 0; rowA < this->_i; rowA++) {
 
         for (size_t colB = 0; colB < b._j; colB++) {

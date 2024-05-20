@@ -1,22 +1,33 @@
+#include <cstddef>
 #include <iostream>
+#include <machine.hpp>
 #include <matrix.hpp>
-#include <random>
+#include <utility>
 #include <vector>
-int main(int argc, char *[]) {
+std::vector<std::pair<matrix, matrix>> generateXORdata(size_t n) {
+    std::vector<std::pair<matrix, matrix>> ret;
+    std::random_device rd{};
+    std::mt19937 gen{rd()};
+    std::bernoulli_distribution dist(0.5);
+    for (size_t i = 0; i < n; i++) {
 
-    const std::vector<float> vec{1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4};
-    const std::vector<float> vec1{1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4};
-    const std::vector<float> resVec1{3, 6, 9, 12, 6, 12, 18, 24, 9, 18, 27, 36, 12, 24, 36, 48};
-    const std::vector<float> resVec2(9, 30);
-    matrix res2{4, 4, resVec1};
-    matrix mat{4, 3, vec};
-    matrix mat1{3, 4, vec1};
-    matrix res1 = mat * mat1;
-    res2.coutMat("res2");
-    res1.coutMat("res");
-    mat.coutMat("A");
-    mat1.coutMat("B");
-    bool s = res1 == res2;
-    std::cout << "\n\n" << s << "\n\n";
+        const bool A = dist(gen);
+        const bool B = dist(gen);
+        const bool C = B != A;
+        matrix input(2, 1, std::vector<float>{static_cast<float>(A), static_cast<float>(B)});
+        matrix ans(1, 1, std::vector<float>{static_cast<float>(C)});
+        ret.push_back(std::pair<matrix, matrix>{input, ans});
+    }
+    return ret;
+}
+int main(int argc, char *[]) {
+    auto trainingData = generateXORdata(10);
+    std::vector<float> inVec(12, 0.6);
+    machine mach{2};
+    mach.addLayer(3);
+    mach.addLayer(1);
+    mach.coutMachine();
+    mach.train(trainingData, 5E-12, 10);
+
     return 0;
 }

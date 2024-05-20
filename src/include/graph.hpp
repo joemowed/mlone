@@ -11,7 +11,6 @@ class graph {
     const size_t inputWidth;
     void push(size_t currNode);
     void Multiply(size_t currNode);
-    void Input(size_t currNode);
     void Sigmoid(size_t currNode);
     void Add(size_t currNode);
     void Subtract(size_t currNode);
@@ -24,16 +23,16 @@ class graph {
         Operation operation;
         std::optional<matrix> result;
         std::optional<matrix> constants;
-        std::optional<matrix> constants_dx;
-        std::optional<matrix> input_dx;
     };
     std::vector<Node> data;
     graph(size_t inputSize);
+    static std::string getOpString(Operation);
     void addNode(Operation op, const matrix &constants);
     void addNode(Operation op);
     void calculate(const matrix &input);
     size_t size() const;
     size_t inputSize() const;
+    matrix result() const;
 };
 
 #endif

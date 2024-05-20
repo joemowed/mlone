@@ -29,7 +29,9 @@ class matrix {
     float &at(size_t x, size_t y);
     // member accesses are zero indexed
     matrix sig() const;
+    matrix hadMult(const matrix &b) const;
     matrix sig_d() const;
+    matrix multiplyByConstant(float b) const;
     matrix operator+(const matrix &b) const;
     matrix operator*(const matrix &b) const;
     matrix operator-(const matrix &b) const;

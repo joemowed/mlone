@@ -31,7 +31,7 @@ TEST(matrix, randomConstructor) {
     std::normal_distribution<float> dist(0, 2);
     EXPECT_NO_THROW(matrix mat(40, 400, dist));
     matrix mat(40, 400, dist);
-    matrix mat2(500, 50000, dist);
+    matrix mat2(500, 500, dist);
     EXPECT_NO_THROW(mat.at(39, 399));
     EXPECT_NO_THROW(mat.at(0, 0));
     mat.coutMatDims("Mat");
