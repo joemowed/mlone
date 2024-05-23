@@ -23,9 +23,12 @@ class graph {
         Operation operation;
         std::optional<matrix> result;
         std::optional<matrix> constants;
+        std::optional<matrix> backprop_dx;
+        std::optional<Node *> prevNode;
     };
     std::vector<Node> data;
     graph(size_t inputSize);
+    matrix condenseWeights(Node &);
     static std::string getOpString(Operation);
     void addNode(Operation op, const matrix &constants);
     void addNode(Operation op);

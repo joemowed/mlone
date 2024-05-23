@@ -7,12 +7,14 @@ graph::graph(size_t inputSize) : inputWidth{inputSize} {
     this->nodeCount = 1;
 }
 void graph::addNode(Operation op, const matrix &constants) {
-    data.push_back(Node{op, std::nullopt, constants});
+    Node *prev = &(this->data.back());
+    data.push_back(Node{op, std::nullopt, constants, std::nullopt, prev});
     this->nodeCount++;
 }
 void graph::addNode(Operation op) {
 
-    data.push_back(Node{op, std::nullopt, std::nullopt});
+    Node *prev = &(this->data.back());
+    data.push_back(Node{op, std::nullopt, std::nullopt, std::nullopt, prev});
     this->nodeCount++;
 }
 void graph::calculate(const matrix &input) {
@@ -75,11 +77,25 @@ void graph::push(size_t currNode) {
         push(currNode);
     }
 }
+matrix graph::condenseWeights(graph::Node &node) {
+    const matrix &prevActivation = *node.prevNode.value()->result;
+    matrix preSum = node.constants->transpose();
+    matrix ret = matrix(prevActivation.i(), 1);
+    for (size_t x = 0; preSum.i(); x++) {
+        float sum = 0;
+        for (size_t y = 0; y < preSum.j(); y++) {
+            sum += preSum.at(x, y);
+        }
+        ret.at(x, 0) = sum;
+    }
+    return ret;
+}
 void graph::Multiply(size_t currNode) {
     Node &node = data.at(currNode);
     Node &prevNode = data.at(currNode - 1);
     assertm(node.constants.has_value() == true, "Attempt to multiply on node without loaded constants");
     node.result.emplace(node.constants.value() * prevNode.result.value());
+    node.backprop_dx = condenseWeights(node);
 }
 void graph::Sigmoid(size_t currNode) {
 

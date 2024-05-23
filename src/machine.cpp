@@ -134,7 +134,6 @@ std::vector<matrix> machine::inferForTraining(std::pair<matrix, matrix> inputDat
     }
     return ret;
 }
-matrix machine::trainingTransposeMult(const matrix &prevActivation, const matrix &sig_dx) { return sig_dx * (prevActivation.transpose()); }
 matrix machine::getdC_dE() const { return g->data.at(g->data.size() - COST_NODES).result.value(); }
 void machine::loadNewCostConstants(const matrix &y) {
     assertm(y.j() == 1, "Loading non j=1 cost matrix");
