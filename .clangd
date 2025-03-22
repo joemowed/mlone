@@ -1,4 +1,4 @@
 CompileFlags:
-  Add:
-    "-I=/home/jmaloney/Documents/mlone/src/include"
   CompilationDatabase: build/
+
+
