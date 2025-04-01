@@ -5,5 +5,5 @@ cd ./build
 cmake ..
 #ln -s cmake/compile_commands.json ../ 
 make
-ctest
+ctest --output-on-failure
 cd "$(dirname "$0")"
