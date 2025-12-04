@@ -25,7 +25,7 @@ project(mlone VERSION 1.0
     DESCRIPTION "simple cpu based neural network"
     LANGUAGES CXX)
 
-set(ROOT_SRC_DIR "app")
+set(ROOT_SRC_DIR "../app")
 file(GLOB SOURCES "${ROOT_SRC_DIR}/src/*.cpp")
 file(GLOB TESTLIB "${ROOT_SRC_DIR}/testing/*.cc")
 file(GLOB TESTSRC "${ROOT_SRC_DIR}/src/*.cpp")
