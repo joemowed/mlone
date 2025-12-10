@@ -31,7 +31,7 @@ file(GLOB TESTLIB "${ROOT_SRC_DIR}/testing/*.cc")
 file(GLOB TESTSRC "${ROOT_SRC_DIR}/src/*.cpp")
 list(FILTER TESTSRC EXCLUDE REGEX "src/main.cpp")
 
-include_directories(app/include)
+include_directories(../app/include)
 
 add_executable(mlone.bin ${SOURCES})
 
