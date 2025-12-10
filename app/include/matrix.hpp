@@ -8,13 +8,12 @@
 #include <vector>
 
 class Matrix {
-  private:
+  public:
     /*Underlying implementation of all matrix instances.  Change this here to
      * suit the application.*/
     using Impl_t = Matrix_ST;
-    Impl_t pimpl = ;
+    Impl_t impl;
 
-  public:
     Matrix() = delete;
 
     // initializes matrix with default value for all elements

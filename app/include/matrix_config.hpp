@@ -4,5 +4,4 @@
 /* Underlying datatype of all matrix instances.  Change this here to suit
  * the application */
 using Base_t = float;
-
 #endif
