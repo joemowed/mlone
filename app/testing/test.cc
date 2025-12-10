@@ -1,2 +1,2 @@
 #include <gtest/gtest.h>
-TEST(TEST, TEST) { EXPECT_EQ('1', '1'); }
+TEST(testing, testing_test) { EXPECT_EQ('1', '1'); }
