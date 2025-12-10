@@ -6,14 +6,11 @@
 #include <vector>
 class Matrix;
 class Matrix_ST {
+  public:
+    std::size_t get_m() const;
+    std::size_t get_n() const;
 
-    std::size_t get_m();
-    std::size_t get_n();
-
-    // returns false if matrix is not yet initialized
-    bool is_initialized();
-
-    Base_t at(std::size_t i, std::size_t j);
+    Base_t &at(const std::size_t i, const std::size_t j);
 
     // matrix multiplication terminates if dimensions mismatch
     Matrix &operator*(const Matrix &right);
@@ -25,9 +22,25 @@ class Matrix_ST {
     Matrix &operator-(const Matrix &right);
 
     // used to initialize matrix and weights to zero
-    void init(std::size_t m, std::size_t n);
+    void init(const std::size_t m, const std::size_t n);
 
     // used to initialize matrix and weights based on a vector of values
-    void init(std::size_t m, std::size_t n, const std::vector<Base_t> values);
+    void init(const std::size_t m, const std::size_t n,
+              const std::vector<Base_t> values);
+
+  private:
+    std::size_t m = 0;
+    std::size_t n = 0;
+    bool is_initialized = false;
+
+    std::vector<Base_t> data;
+
+    // calculates the vector index given the indices (i,j) from the matrix
+    std::size_t calculate_vec_index(const std::size_t i,
+                                    const std::size_t j) const;
+
+    /*checks that bounds fall within matrix dimensions, and terminates program
+     * if they do not.*/
+    void bounds_check(const std::size_t i, const std::size_t j) const;
 };
 #endif
