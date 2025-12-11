@@ -13,13 +13,13 @@ class Matrix_ST {
     Base_t &at(const std::size_t i, const std::size_t j);
 
     // matrix multiplication terminates if dimensions mismatch
-    Matrix &operator*(const Matrix &right);
+    Matrix *operator*(const Matrix &right);
 
     // matrix subtraction, terminates if dimensions mismatch
-    Matrix &operator+(const Matrix &right);
+    Matrix *operator+(const Matrix &right);
 
     // matrix addition, terminates if dimensions mismatch
-    Matrix &operator-(const Matrix &right);
+    Matrix *operator-(const Matrix &right);
 
     // used to initialize matrix and weights to zero
     void init(const std::size_t m, const std::size_t n);

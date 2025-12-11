@@ -9,19 +9,20 @@ Base_t &Matrix_ST::at(std::size_t i, std::size_t j) {
     if (!is_initialized) {
         std::cerr << "Attempt to call \"at(i,j)\" on uninitialized matrix"
                   << std::endl;
-        std::abort();
+        throw std::runtime_error(
+            "Matrix \"at(i,j)\" called on uninitialized matrix");
     }
     return data.at(calculate_vec_index(i, j));
 }
 
 // matrix multiplication terminates if dimensions mismatch
-Matrix &Matrix_ST::operator*(const Matrix &right) {}
+Matrix_ST Matrix_ST::operator*(const Matrix &right) {}
 
 // matrix subtraction, terminates if dimensions mismatch
-Matrix &Matrix_ST::operator+(const Matrix &right) {}
+Matrix_ST Matrix_ST::operator+(const Matrix &right) { return Matrix(1, 2); }
 
 // matrix addition, terminates if dimensions mismatch
-Matrix &Matrix_ST::operator-(const Matrix &right) {}
+Matrix_ST Matrix_ST::operator-(const Matrix &right) {}
 
 // used to initialize matrix and weights to zero
 void Matrix_ST::init(const std::size_t m, const std::size_t n) {
@@ -29,10 +30,12 @@ void Matrix_ST::init(const std::size_t m, const std::size_t n) {
     if (is_initialized) {
         std::cerr << "Matrix initilization failed, matrix already initialized"
                   << std::endl;
-        std::abort();
+        throw std::runtime_error("Matrix initialization attempted on "
+                                 "previously initialized matrix.");
     }
     this->m = m;
     this->n = n;
+    this->data.resize(m * n);
     this->is_initialized = true;
 }
 
@@ -46,7 +49,8 @@ void Matrix_ST::init(const std::size_t m, const std::size_t n,
                   << " total elements)\n"
                   << "Vector size: " << values.size() << " elements"
                   << std::endl;
-        std::abort();
+        throw std::invalid_argument(
+            "Matrix initialization vector size does not match matrix size.");
     }
     this->data = values;
     this->init(m, n);
@@ -72,7 +76,7 @@ void Matrix_ST::bounds_check(const std::size_t i, const std::size_t j) const {
                   << "Matrix size: (" << get_m() << "," << get_n()
                   << ") Attempted access: (" << i << "," << j << ")"
                   << std::endl;
-        std::abort();
+        throw std::out_of_range("Matrix access out of bounds.");
     }
     return;
 }
