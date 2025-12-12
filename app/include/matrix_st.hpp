@@ -8,9 +8,6 @@ class Matrix {
     // base type used by implementation of matrix
     using Base_t = float;
 
-    // all matrices must have dimensions when initialized
-    Matrix() = delete;
-
     // initializes matrix with default value for all elements
     Matrix(std::size_t m, std::size_t n);
 
@@ -59,6 +56,11 @@ class Matrix {
 
     // used internally to move data from a vector into a matrix
     void init_with_move(std::vector<Base_t> &values);
+    void init_with_move(const std::size_t m, const std::size_t n,
+                        std::vector<Base_t> &values);
+
+    // used to create matrix without allocating memory for it
+    Matrix() = default;
 
     /* Performs element-wise transformation with another matrix, returning the
      * result as a new matrix. */

@@ -48,7 +48,6 @@ Matrix Matrix::operator-(const Matrix &right) const {
 
 // used to initialize matrix and weights to zero
 Matrix::Matrix(const std::size_t m, const std::size_t n) {
-    // terminate if matrix is already initialized
     if ((m <= 0) || (n <= 0)) {
         std::cerr << "Matrix initilization failed, matrix dimensions invalid. "
                   << "Dimensions: (" << m << "x" << n << ")" << std::endl;
@@ -123,14 +122,30 @@ bool Matrix::has_equal_dimensions(const Matrix &mat) const {
 }
 
 void Matrix::init_with_move(std::vector<Base_t> &values) {
+
     if ((get_m() * get_n()) != values.size()) {
-        std::cerr << "Matrix initilization with move failed, matrix dimensions "
-                     "invalid. "
+        std::cerr
+            << "Matrix initialization with move failed, matrix dimensions "
+               "invalid. "
+            << "Dimensions: (" << m << "x" << n << ")" << std::endl;
+        throw std::invalid_argument("Matrix initialization with move failed, "
+                                    "matrix dimensions invalid.");
+    }
+    this->data = std::move(values);
+}
+
+void Matrix::init_with_move(const std::size_t m, const std::size_t n,
+                            std::vector<Base_t> &values) {
+    if ((m <= 0) || (n <= 0)) {
+        std::cerr << "Matrix initialization with move failed, matrix "
+                     "dimensions invalid. "
                   << "Dimensions: (" << m << "x" << n << ")" << std::endl;
-        throw std::invalid_argument("Matrix initilization with move failed, "
+        throw std::invalid_argument("Matrix initialization with move failed, "
                                     "matrix dimensions invalid.");
     }
 
+    this->m = m;
+    this->n = n;
     this->data = std::move(values);
 }
 template <typename Functor>
@@ -150,6 +165,22 @@ Matrix Matrix::transform(const Matrix &right, Functor &binary_op) const {
     // move the values into the return matrix
     ret.init_with_move(values);
 
+    return ret;
+}
+
+Matrix Matrix::transpose() const {
+
+    std::vector<Base_t> values_T(data.size());
+    const std::size_t m = get_m();
+    const std::size_t n = get_n();
+
+    for (std::size_t i = 0; i < m * n; i++) {
+        const std::size_t transposed_idx = (i % n) * m + (i / n);
+        values_T.at(transposed_idx) = data.at(i);
+    }
+
+    Matrix ret{};
+    ret.init_with_move(n, m, values_T);
     return ret;
 }
 #endif
