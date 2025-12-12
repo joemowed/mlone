@@ -1,37 +1,47 @@
-#ifndef __MATRIX_ST_INCLUDE_GAURD__
-#define __MATRIX_ST_INCLUDE_GAURD__
+#ifndef _MATRIX_ST_INCLUDE_GAURD_
+#define _MATRIX_ST_INCLUDE_GAURD_
 // Single threaded CPU based implementation of the matrix interface
-#include "matrix_config.hpp"
 #include <cstddef>
 #include <vector>
-class Matrix;
-class Matrix_ST {
+class Matrix {
   public:
+    // base type used by implementation of matrix
+    using Base_t = float;
+
+    // all matrices must have dimensions when initialized
+    Matrix() = delete;
+
+    // initializes matrix with default value for all elements
+    Matrix(std::size_t m, std::size_t n);
+
+    /* Used to initialize matrix and weights based on a vector of values
+     * (row-wise). */
+    Matrix(std::size_t m, std::size_t n, const std::vector<Base_t> values);
+
     std::size_t get_m() const;
     std::size_t get_n() const;
 
-    Base_t &at(const std::size_t i, const std::size_t j);
+    Base_t &at(std::size_t i, std::size_t j);
 
-    // matrix multiplication terminates if dimensions mismatch
-    Matrix *operator*(const Matrix &right);
+    // matrix multiplication terminates if dimensions are incompatible
+    Matrix operator*(const Matrix &right) const;
+
+    bool operator==(const Matrix &right) const;
+
+    // matrix multiplication with a scalar
+    Matrix scale(const Base_t &scalar) const;
+
+    Matrix transpose() const;
 
     // matrix subtraction, terminates if dimensions mismatch
-    Matrix *operator+(const Matrix &right);
+    Matrix operator+(const Matrix &right) const;
 
     // matrix addition, terminates if dimensions mismatch
-    Matrix *operator-(const Matrix &right);
-
-    // used to initialize matrix and weights to zero
-    void init(const std::size_t m, const std::size_t n);
-
-    // used to initialize matrix and weights based on a vector of values
-    void init(const std::size_t m, const std::size_t n,
-              const std::vector<Base_t> values);
+    Matrix operator-(const Matrix &right) const;
 
   private:
     std::size_t m = 0;
     std::size_t n = 0;
-    bool is_initialized = false;
 
     std::vector<Base_t> data;
 
@@ -40,7 +50,19 @@ class Matrix_ST {
                                     const std::size_t j) const;
 
     /*checks that bounds fall within matrix dimensions, and terminates program
-     * if they do not.*/
+     * if they do not. */
     void bounds_check(const std::size_t i, const std::size_t j) const;
+
+    /* returns true if the matrix has equal dimensions to itself, false
+     * otherwise. */
+    bool has_equal_dimensions(const Matrix &mat) const;
+
+    // used internally to move data from a vector into a matrix
+    void init_with_move(std::vector<Base_t> &values);
+
+    /* Performs element-wise transformation with another matrix, returning the
+     * result as a new matrix. */
+    template <typename Functor>
+    Matrix transform(const Matrix &right, Functor &binary_op) const;
 };
 #endif

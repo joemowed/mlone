@@ -1,47 +1,69 @@
 #include "matrix_st.hpp"
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 
-std::size_t Matrix_ST::get_m() const { return this->m; }
-std::size_t Matrix_ST::get_n() const { return this->n; }
+#if MATRIX_IMPL == MATRIX_IMPL_CPU_ST_VALUE
 
-Base_t &Matrix_ST::at(std::size_t i, std::size_t j) {
-    if (!is_initialized) {
-        std::cerr << "Attempt to call \"at(i,j)\" on uninitialized matrix"
-                  << std::endl;
-        throw std::runtime_error(
-            "Matrix \"at(i,j)\" called on uninitialized matrix");
-    }
+std::size_t Matrix::get_m() const { return this->m; }
+std::size_t Matrix::get_n() const { return this->n; }
+
+Matrix::Base_t &Matrix::at(std::size_t i, std::size_t j) {
     return data.at(calculate_vec_index(i, j));
 }
 
 // matrix multiplication terminates if dimensions mismatch
-Matrix_ST Matrix_ST::operator*(const Matrix &right) {}
+Matrix Matrix::operator*(const Matrix &right) const {}
 
 // matrix subtraction, terminates if dimensions mismatch
-Matrix_ST Matrix_ST::operator+(const Matrix &right) { return Matrix(1, 2); }
+Matrix Matrix::operator+(const Matrix &right) const {
+    if (!this->has_equal_dimensions(right)) {
+        std::cerr << "Matrix addition failed, matrix dimensions mismatch.\n"
+                  << "Dimensions: (" << get_m() << "x" << get_n() << ") + ("
+                  << right.get_m() << "x" << right.get_n() << ")" << std::endl;
+        throw std::invalid_argument(
+            "Matrix addtion failed, matrix dimensions mismatch.");
+    }
+
+    auto lambda = [](const Base_t &a, const Base_t &b) { return a + b; };
+
+    return transform(right, lambda);
+}
 
 // matrix addition, terminates if dimensions mismatch
-Matrix_ST Matrix_ST::operator-(const Matrix &right) {}
+Matrix Matrix::operator-(const Matrix &right) const {
+
+    if (!this->has_equal_dimensions(right)) {
+        std::cerr << "Matrix subtraction failed, matrix dimensions mismatch.\n"
+                  << "Dimensions: (" << get_m() << "x" << get_n() << ") + ("
+                  << right.get_m() << "x" << right.get_n() << ")" << std::endl;
+        throw std::invalid_argument(
+            "Matrix subtraction failed, matrix dimensions mismatch.");
+    }
+
+    auto lambda = [](const Base_t &a, const Base_t &b) { return a - b; };
+
+    return transform(right, lambda);
+}
 
 // used to initialize matrix and weights to zero
-void Matrix_ST::init(const std::size_t m, const std::size_t n) {
+Matrix::Matrix(const std::size_t m, const std::size_t n) {
     // terminate if matrix is already initialized
-    if (is_initialized) {
-        std::cerr << "Matrix initilization failed, matrix already initialized"
-                  << std::endl;
-        throw std::runtime_error("Matrix initialization attempted on "
-                                 "previously initialized matrix.");
+    if ((m <= 0) || (n <= 0)) {
+        std::cerr << "Matrix initilization failed, matrix dimensions invalid. "
+                  << "Dimensions: (" << m << "x" << n << ")" << std::endl;
+        throw std::invalid_argument(
+            "Matrix initilization failed, matrix dimensions invalid.");
     }
     this->m = m;
     this->n = n;
     this->data.resize(m * n);
-    this->is_initialized = true;
 }
 
 // used to initialize matrix and weights based on a vector of values
-void Matrix_ST::init(const std::size_t m, const std::size_t n,
-                     const std::vector<Base_t> values) {
+Matrix::Matrix(const std::size_t m, const std::size_t n,
+               const std::vector<Base_t> values)
+    : Matrix(m, n) {
     if (m * n != values.size()) {
         std::cerr << "Matrix initialization failed, vector of values does not "
                      "match matrix dimensions.\n"
@@ -53,12 +75,11 @@ void Matrix_ST::init(const std::size_t m, const std::size_t n,
             "Matrix initialization vector size does not match matrix size.");
     }
     this->data = values;
-    this->init(m, n);
 }
 
 // calculates the vector index given the indices (i,j) from the matrix
-std::size_t Matrix_ST::calculate_vec_index(const std::size_t i,
-                                           const std::size_t j) const {
+std::size_t Matrix::calculate_vec_index(const std::size_t i,
+                                        const std::size_t j) const {
     bounds_check(i, j);
 
     /*Row first storage.  The minus ones are because matrix is 1-indexed and
@@ -68,7 +89,7 @@ std::size_t Matrix_ST::calculate_vec_index(const std::size_t i,
 
 /*checks that bounds fall within matrix dimensions, and terminates program
  * if they do not.*/
-void Matrix_ST::bounds_check(const std::size_t i, const std::size_t j) const {
+void Matrix::bounds_check(const std::size_t i, const std::size_t j) const {
     const bool is_over = ((i > get_m()) || (j > get_n()));
     const bool is_under = ((i <= 0) || (j <= 0));
     if (is_over || is_under) {
@@ -80,3 +101,55 @@ void Matrix_ST::bounds_check(const std::size_t i, const std::size_t j) const {
     }
     return;
 }
+
+bool Matrix::operator==(const Matrix &right) const {
+    if (!this->has_equal_dimensions(right)) {
+        return false;
+    }
+    if (this->data != right.data) {
+        return false;
+    }
+    return true;
+}
+
+bool Matrix::has_equal_dimensions(const Matrix &mat) const {
+    if (this->get_m() != mat.get_m()) {
+        return false;
+    }
+    if (this->get_n() != mat.get_n()) {
+        return false;
+    }
+    return true;
+}
+
+void Matrix::init_with_move(std::vector<Base_t> &values) {
+    if ((get_m() * get_n()) != values.size()) {
+        std::cerr << "Matrix initilization with move failed, matrix dimensions "
+                     "invalid. "
+                  << "Dimensions: (" << m << "x" << n << ")" << std::endl;
+        throw std::invalid_argument("Matrix initilization with move failed, "
+                                    "matrix dimensions invalid.");
+    }
+
+    this->data = std::move(values);
+}
+template <typename Functor>
+Matrix Matrix::transform(const Matrix &right, Functor &binary_op) const {
+
+    std::vector<Base_t> values(get_m() * get_n());
+    Matrix ret(get_m(), get_n());
+
+    auto this_begin = data.begin();
+    auto this_end = data.end();
+    auto right_begin = right.data.begin();
+    auto result_begin = values.begin();
+
+    // do the operation element-wise on the vectors
+    std::transform(this_begin, this_end, right_begin, result_begin, binary_op);
+
+    // move the values into the return matrix
+    ret.init_with_move(values);
+
+    return ret;
+}
+#endif
