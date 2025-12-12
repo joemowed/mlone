@@ -121,3 +121,48 @@ TEST(matrix_arithmetic, transpose) {
     EXPECT_TRUE(rect_mat_T == rect_mat_calc_T);
     EXPECT_TRUE(square_mat_T == square_mat_calc_T);
 }
+TEST(matrix_arithmetic, multiplication_exceptions) {
+    const Matrix A{2, 3};
+    const Matrix B{2, 2};
+    const Matrix A_T{A.transpose()};
+    const Matrix B_T{B.transpose()};
+    EXPECT_ANY_THROW(A * B);
+    EXPECT_ANY_THROW(B * A_T);
+    EXPECT_ANY_THROW(A * B_T);
+    EXPECT_NO_THROW(B * A);
+    EXPECT_NO_THROW(A_T * B);
+    EXPECT_NO_THROW(B_T * A);
+}
+TEST(matrix_arithmetic, multiplication) {
+    const std::vector<Matrix::Base_t> A_values{1, 2, 3, 4, 5, 6};
+    const std::vector<Matrix::Base_t> B_values{1, 2, 1, 2};
+    const Matrix A{2, 3, A_values};
+    const Matrix B{2, 2, B_values};
+    const Matrix A_T{A.transpose()};
+    const Matrix B_T{B.transpose()};
+
+    // result1 = A^T * A
+    const std::vector<Matrix::Base_t> result1_values{17, 22, 27, 22, 29,
+                                                     36, 27, 36, 45};
+    // result2 = A * A^T
+    const std::vector<Matrix::Base_t> result2_values{14, 32, 32, 77};
+
+    // result3 = B * B
+    const std::vector<Matrix::Base_t> result3_values{3, 6, 3, 6};
+    // result4 = B^T * B
+    const std::vector<Matrix::Base_t> result4_values{2, 4, 4, 8};
+
+    // result5 = B * A
+    const std::vector<Matrix::Base_t> result5_values{9, 12, 15, 9, 12, 15};
+
+    const Matrix result1{3, 3, result1_values};
+    const Matrix result2{2, 2, result2_values};
+    const Matrix result3{2, 2, result3_values};
+    const Matrix result4{2, 2, result4_values};
+    const Matrix result5{2, 3, result5_values};
+    EXPECT_TRUE((A_T * A) == result1);
+    EXPECT_TRUE((A * A_T) == result2);
+    EXPECT_TRUE((B * B) == result3);
+    EXPECT_TRUE((B_T * B) == result4);
+    EXPECT_TRUE((B * A) == result5);
+}

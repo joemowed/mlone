@@ -2,6 +2,7 @@
 #define _MATRIX_ST_INCLUDE_GAURD_
 // Single threaded CPU based implementation of the matrix interface
 #include <cstddef>
+#include <string>
 #include <vector>
 class Matrix {
   public:
@@ -42,8 +43,9 @@ class Matrix {
 
     std::vector<Base_t> data;
 
-    // calculates the vector index given the indices (i,j) from the matrix
-    std::size_t calculate_vec_index(const std::size_t i,
+    /* calculates the vector index given the indices (i,j) and dimensions (m,n)
+     * of the matrix*/
+    std::size_t calculate_vec_index(const std::size_t n, const std::size_t i,
                                     const std::size_t j) const;
 
     /*checks that bounds fall within matrix dimensions, and terminates program
@@ -66,5 +68,11 @@ class Matrix {
      * result as a new matrix. */
     template <typename Functor>
     Matrix transform(const Matrix &right, Functor &binary_op) const;
+
+    void
+    throw_binary_mismatch_dims(const Matrix &right,
+                               const std::string &attempted_operation) const;
+    void throw_invalid_dims(const std::size_t m, const std::size_t n,
+                            const std::string &attempted_operation) const;
 };
 #endif

@@ -9,20 +9,48 @@ std::size_t Matrix::get_m() const { return this->m; }
 std::size_t Matrix::get_n() const { return this->n; }
 
 Matrix::Base_t &Matrix::at(std::size_t i, std::size_t j) {
-    return data.at(calculate_vec_index(i, j));
+    bounds_check(i, j);
+    return data.at(calculate_vec_index(get_n(), i, j));
 }
 
 // matrix multiplication terminates if dimensions mismatch
-Matrix Matrix::operator*(const Matrix &right) const {}
+Matrix Matrix::operator*(const Matrix &right) const {
+    /* Multiplies left(m x n) with right(n x p) matrix to produce result(m x p)
+     * matrix.  Transposes right(n x p) to improve cache locality.*/
+    const std::size_t m = get_m();
+    const std::size_t n = get_n();
+    const std::size_t p = right.get_n();
+
+    bool is_dimensions_valid = (n == right.get_m());
+    if (!is_dimensions_valid) {
+        throw_binary_mismatch_dims(right, "multiplication");
+    }
+
+    std::vector<Base_t> values(m * p);
+    Matrix right_T = right.transpose();
+
+    for (std::size_t i = 1; i <= m; ++i) {
+        for (std::size_t j = 1; j <= p; ++j) {
+            Base_t sum = 0;
+            for (std::size_t k = 1; k <= n; ++k) {
+                const Base_t curr_left = data.at(calculate_vec_index(n, i, k));
+                const Base_t curr_right =
+                    right_T.data.at(calculate_vec_index(n, j, k));
+                sum += curr_left * curr_right;
+            };
+            const std::size_t result_idx = calculate_vec_index(p, i, j);
+            values.at(result_idx) = sum;
+        }
+    }
+    Matrix mat{};
+    mat.init_with_move(get_m(), right.get_n(), values);
+    return mat;
+}
 
 // matrix subtraction, terminates if dimensions mismatch
 Matrix Matrix::operator+(const Matrix &right) const {
     if (!this->has_equal_dimensions(right)) {
-        std::cerr << "Matrix addition failed, matrix dimensions mismatch.\n"
-                  << "Dimensions: (" << get_m() << "x" << get_n() << ") + ("
-                  << right.get_m() << "x" << right.get_n() << ")" << std::endl;
-        throw std::invalid_argument(
-            "Matrix addtion failed, matrix dimensions mismatch.");
+        throw_binary_mismatch_dims(right, "addition");
     }
 
     auto lambda = [](const Base_t &a, const Base_t &b) { return a + b; };
@@ -34,11 +62,7 @@ Matrix Matrix::operator+(const Matrix &right) const {
 Matrix Matrix::operator-(const Matrix &right) const {
 
     if (!this->has_equal_dimensions(right)) {
-        std::cerr << "Matrix subtraction failed, matrix dimensions mismatch.\n"
-                  << "Dimensions: (" << get_m() << "x" << get_n() << ") + ("
-                  << right.get_m() << "x" << right.get_n() << ")" << std::endl;
-        throw std::invalid_argument(
-            "Matrix subtraction failed, matrix dimensions mismatch.");
+        throw_binary_mismatch_dims(right, "subtraction");
     }
 
     auto lambda = [](const Base_t &a, const Base_t &b) { return a - b; };
@@ -49,10 +73,7 @@ Matrix Matrix::operator-(const Matrix &right) const {
 // used to initialize matrix and weights to zero
 Matrix::Matrix(const std::size_t m, const std::size_t n) {
     if ((m <= 0) || (n <= 0)) {
-        std::cerr << "Matrix initilization failed, matrix dimensions invalid. "
-                  << "Dimensions: (" << m << "x" << n << ")" << std::endl;
-        throw std::invalid_argument(
-            "Matrix initilization failed, matrix dimensions invalid.");
+        throw_invalid_dims(m, n, "initilization");
     }
     this->m = m;
     this->n = n;
@@ -76,14 +97,13 @@ Matrix::Matrix(const std::size_t m, const std::size_t n,
     this->data = values;
 }
 
-// calculates the vector index given the indices (i,j) from the matrix
-std::size_t Matrix::calculate_vec_index(const std::size_t i,
+std::size_t Matrix::calculate_vec_index(const std::size_t n,
+                                        const std::size_t i,
                                         const std::size_t j) const {
-    bounds_check(i, j);
 
     /*Row first storage.  The minus ones are because matrix is 1-indexed and
      * vector is 0-indexed.*/
-    return j - 1 + ((i - 1) * get_n());
+    return j - 1 + ((i - 1) * n);
 }
 
 /*checks that bounds fall within matrix dimensions, and terminates program
@@ -124,12 +144,7 @@ bool Matrix::has_equal_dimensions(const Matrix &mat) const {
 void Matrix::init_with_move(std::vector<Base_t> &values) {
 
     if ((get_m() * get_n()) != values.size()) {
-        std::cerr
-            << "Matrix initialization with move failed, matrix dimensions "
-               "invalid. "
-            << "Dimensions: (" << m << "x" << n << ")" << std::endl;
-        throw std::invalid_argument("Matrix initialization with move failed, "
-                                    "matrix dimensions invalid.");
+        throw_invalid_dims(m, n, "initialization with move");
     }
     this->data = std::move(values);
 }
@@ -137,11 +152,7 @@ void Matrix::init_with_move(std::vector<Base_t> &values) {
 void Matrix::init_with_move(const std::size_t m, const std::size_t n,
                             std::vector<Base_t> &values) {
     if ((m <= 0) || (n <= 0)) {
-        std::cerr << "Matrix initialization with move failed, matrix "
-                     "dimensions invalid. "
-                  << "Dimensions: (" << m << "x" << n << ")" << std::endl;
-        throw std::invalid_argument("Matrix initialization with move failed, "
-                                    "matrix dimensions invalid.");
+        throw_invalid_dims(m, n, "initialization with move");
     }
 
     this->m = m;
@@ -182,5 +193,26 @@ Matrix Matrix::transpose() const {
     Matrix ret{};
     ret.init_with_move(n, m, values_T);
     return ret;
+}
+
+void Matrix::throw_binary_mismatch_dims(
+    const Matrix &right, const std::string &attempted_operation) const {
+    std::string error_reason = "Matrix " + attempted_operation +
+                               " failed, matrix dimensions mismatch.";
+
+    std::cerr << error_reason << "Dimensions: (" << get_m() << "x" << get_n()
+              << ") + (" << right.get_m() << "x" << right.get_n() << ")"
+              << std::endl;
+    throw std::invalid_argument(error_reason);
+}
+
+void Matrix::throw_invalid_dims(std::size_t m, std::size_t n,
+                                const std::string &attempted_operation) const {
+    std::string error_reason = "Matrix " + attempted_operation +
+                               " failed, matrix dimensions invalid. ";
+
+    std::cerr << error_reason << "Dimensions: (" << m << "x" << n << ")"
+              << std::endl;
+    throw std::invalid_argument(error_reason);
 }
 #endif
