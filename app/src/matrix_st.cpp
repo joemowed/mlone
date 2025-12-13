@@ -215,6 +215,17 @@ void Matrix::throw_invalid_dims(std::size_t m, std::size_t n,
               << std::endl;
     throw std::invalid_argument(error_reason);
 }
+Matrix Matrix::scale(const Base_t &scalar) const {
+    auto mult_by_scalar = [&scalar](const Base_t value) {
+        return value * scalar;
+    };
+    std::vector<Base_t> scaled_values(get_m() * get_n());
+    std::transform(data.begin(), data.end(), scaled_values.begin(),
+                   mult_by_scalar);
+    Matrix ret{};
+    ret.init_with_move(get_m(), get_n(), scaled_values);
+    return ret;
+}
 Matrix Matrix::had(const Matrix &right) const {
     if (!this->has_equal_dimensions(right)) {
         throw_binary_mismatch_dims(right, "hadamard product");

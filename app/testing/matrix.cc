@@ -188,3 +188,14 @@ TEST(matrix_arithmetic, hadamard_product) {
     const Matrix result = mat_op1.had(mat_op2);
     EXPECT_TRUE(result == mat_expected);
 }
+TEST(matrix_arithmetic, scalar_multiplication) {
+
+    const std::vector<Matrix::Base_t> A_values{1, 2, 3, 4, 5, 6};
+    const std::vector<Matrix::Base_t> result1_values{3, 6, 9, 12, 15, 18};
+    const std::vector<Matrix::Base_t> result2_values(6, 0);
+    const Matrix A{2, 3, A_values};
+    const Matrix result1{2, 3, result1_values};
+    const Matrix result2{2, 3, result2_values};
+    EXPECT_TRUE(A.scale(3) == result1);
+    EXPECT_TRUE(A.scale(0) == result2);
+}
