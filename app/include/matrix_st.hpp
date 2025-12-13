@@ -29,6 +29,9 @@ class Matrix {
     // matrix multiplication with a scalar
     Matrix scale(const Base_t &scalar) const;
 
+    // matrix Hadamard product
+    Matrix had(const Matrix &right) const;
+
     Matrix transpose() const;
 
     // matrix subtraction, terminates if dimensions mismatch

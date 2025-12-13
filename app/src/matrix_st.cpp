@@ -215,4 +215,10 @@ void Matrix::throw_invalid_dims(std::size_t m, std::size_t n,
               << std::endl;
     throw std::invalid_argument(error_reason);
 }
+Matrix Matrix::had(const Matrix &right) const {
+    if (!this->has_equal_dimensions(right)) {
+        throw_binary_mismatch_dims(right, "hadamard product");
+    }
+    return transform(right, std::multiplies<Base_t>{});
+}
 #endif

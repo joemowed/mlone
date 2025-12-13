@@ -166,3 +166,25 @@ TEST(matrix_arithmetic, multiplication) {
     EXPECT_TRUE((B_T * B) == result4);
     EXPECT_TRUE((B * A) == result5);
 }
+TEST(matrix_arithmetic, hadamard_exceptions) {
+
+    const Matrix mat1(3, 3);
+    const Matrix mat2(4, 2);
+    const Matrix mat3(2, 3);
+    const Matrix mat4(2, 3);
+
+    EXPECT_ANY_THROW(mat1.had(mat2));
+    EXPECT_ANY_THROW(mat1.had(mat3));
+    EXPECT_ANY_THROW(mat2.had(mat3));
+    EXPECT_NO_THROW(mat3.had(mat4));
+}
+TEST(matrix_arithmetic, hadamard_product) {
+
+    const std::vector<Matrix::Base_t> values_operands{1, 2, 3, 4, 5, 6};
+    const std::vector<Matrix::Base_t> values_result{1, 4, 9, 16, 25, 36};
+    const Matrix mat_op1(2, 3, values_operands);
+    const Matrix mat_op2(2, 3, values_operands);
+    const Matrix mat_expected(2, 3, values_result);
+    const Matrix result = mat_op1.had(mat_op2);
+    EXPECT_TRUE(result == mat_expected);
+}
