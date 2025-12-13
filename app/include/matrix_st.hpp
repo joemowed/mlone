@@ -70,7 +70,7 @@ class Matrix {
     /* Performs element-wise transformation with another matrix, returning the
      * result as a new matrix. */
     template <typename Functor>
-    Matrix transform(const Matrix &right, Functor &binary_op) const;
+    Matrix transform(const Matrix &right, Functor binary_op) const;
 
     void
     throw_binary_mismatch_dims(const Matrix &right,

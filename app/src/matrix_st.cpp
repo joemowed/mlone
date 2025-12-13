@@ -53,9 +53,7 @@ Matrix Matrix::operator+(const Matrix &right) const {
         throw_binary_mismatch_dims(right, "addition");
     }
 
-    auto lambda = [](const Base_t &a, const Base_t &b) { return a + b; };
-
-    return transform(right, lambda);
+    return transform(right, std::plus<Base_t>{});
 }
 
 // matrix addition, terminates if dimensions mismatch
@@ -65,9 +63,7 @@ Matrix Matrix::operator-(const Matrix &right) const {
         throw_binary_mismatch_dims(right, "subtraction");
     }
 
-    auto lambda = [](const Base_t &a, const Base_t &b) { return a - b; };
-
-    return transform(right, lambda);
+    return transform(right, std::minus<Base_t>{});
 }
 
 // used to initialize matrix and weights to zero
@@ -160,7 +156,7 @@ void Matrix::init_with_move(const std::size_t m, const std::size_t n,
     this->data = std::move(values);
 }
 template <typename Functor>
-Matrix Matrix::transform(const Matrix &right, Functor &binary_op) const {
+Matrix Matrix::transform(const Matrix &right, Functor binary_op) const {
 
     std::vector<Base_t> values(get_m() * get_n());
     Matrix ret(get_m(), get_n());
